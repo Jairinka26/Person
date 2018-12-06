@@ -8,4 +8,6 @@ public interface IControler {
     void update();
 
     void delete();
+
+    void search();
 }

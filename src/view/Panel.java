@@ -17,6 +17,7 @@ public class Panel extends JPanel {
    private JButton read;
    private JButton update;
    private JButton delete;
+   private JButton search;
 
     public Panel()
     {
@@ -32,6 +33,7 @@ public class Panel extends JPanel {
         read   =  new JButton("Read");
         update =  new JButton("Update");
         delete =  new JButton("Delete");
+        search =  new JButton("Search");
 
         creat.setBounds(600, 100, 100, 40);
         creat.setBackground(Color.WHITE);
@@ -45,11 +47,15 @@ public class Panel extends JPanel {
         delete.setBounds(600, 250, 100, 40);
         delete.setBackground(Color.WHITE);
 
+        search.setBounds(600, 300, 100, 40);
+        search.setBackground(Color.WHITE);
+
         add(scr);
         add(creat);
         add(read);
         add(update);
         add(delete);
+        add(search);
 
         creat.addActionListener(v->{
             iControler.create();
@@ -59,5 +65,6 @@ public class Panel extends JPanel {
             iControler.read();});
         update.addActionListener(v->{iControler.update();});
         delete.addActionListener(v->{iControler.delete();});
+        search.addActionListener(v->{iControler.search();});
     }
 }

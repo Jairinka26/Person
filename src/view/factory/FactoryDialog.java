@@ -23,6 +23,9 @@ public class FactoryDialog{
             case "delete" :   if (dialog instanceof DialogDelete.DialogDeleteCallBack) {
                 return new DialogDelete<>((DialogDelete.DialogDeleteCallBack) dialog);
             }
+            case "search" :   if (dialog instanceof DialogSearch.DialogSearchCallBack) {
+                return new DialogSearch<>((DialogSearch.DialogSearchCallBack) dialog);
+            }
             default: return null;
         }
     }

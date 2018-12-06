@@ -7,9 +7,12 @@ public interface TableContract {
 
     void setValue(Person pers);
 
+    void setSearch(Person pers);
+
     void setUpdateValue(Person pers);
 
     void delValue(int id);
+
 
 
 

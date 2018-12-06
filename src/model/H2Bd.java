@@ -10,7 +10,6 @@ public class H2Bd {
     private Statement statement;
     private Long iD = 1L;
     private int index = 0;
-    private List<Person> list;
 
     private H2Bd() {
     }
@@ -28,7 +27,7 @@ public class H2Bd {
             Class.forName("org.h2.Driver");
             connect = DriverManager.getConnection("jdbc:h2:~/test", "admin", "");
             statement = connect.createStatement();
-//            ResultSet r = statement.executeQuery("SELECT COUNT(*) FROM PERSON ");
+//           TO_DO: use select top
             ResultSet r = statement.executeQuery("SELECT * FROM PERSON ");
 
             while (r.next()){
@@ -58,7 +57,6 @@ public class H2Bd {
             Class.forName("org.h2.Driver");
             connect = DriverManager.getConnection("jdbc:h2:~/test", "admin", "");
             statement = connect.createStatement();
-//            ResultSet r = statement.executeQuery("SELECT COUNT(*) FROM PERSON ");
             ResultSet r = statement.executeQuery("SELECT * FROM PERSON ");
 
             while (r.next()){
@@ -90,9 +88,7 @@ public class H2Bd {
             connect = DriverManager.getConnection("jdbc:h2:~/test", "admin", "");
             statement = connect.createStatement();
             ResultSet r = statement.executeQuery("Select * FROM Person WHERE ID =" + ID);
-//            ResultSet r = statement.executeQuery("Select * FROM Person WHERE ID=3" );
             r.next();
-            String name = r.getString("FNAME"); // for debug
             person = new Person(ID,r.getInt("index"),r.getString("fname"),r.getString("lname"),r.getLong("age"));
 
         } catch (ClassNotFoundException | SQLException e) {
@@ -116,12 +112,11 @@ public class H2Bd {
             Class.forName("org.h2.Driver");
             connect = DriverManager.getConnection("jdbc:h2:~/test", "admin", "");
             statement = connect.createStatement();
-            statement.executeUpdate("Update Person set fname='" + person.getFname()+"', lname='"+ person.getLname()+"', age="+ person.getAge()+" Where ID="+person.getId());
-//            ResultSet r = statement.executeQuery("Select * FROM Person WHERE ID=3" );
-//            xt();
-//            String name = r.getString("FNAME"); // for debug
-//            person = new Person(ID,r.getInt("index"),r.getString("fname"),r.getString("lname"),r.getLong("age"));
-//            r.ne
+            statement.executeUpdate("Update Person set fname='" + person.getFname()+"', " +
+                    "lname='"+ person.getLname()+"', " +
+                    "age="+ person.getAge()+" " +
+                    "Where ID="+person.getId());
+
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
@@ -135,10 +130,6 @@ public class H2Bd {
             }
 
         }
-//        list.get(person.getIndex()).setFname(person.getFname());
-//        list.get(person.getIndex()).setLname(person.getLname());
-//        list.get(person.getIndex()).setAge(person.getAge());
-//        return list.get(person.getIndex());
         return person;
     }
 
@@ -160,6 +151,35 @@ public class H2Bd {
                 e.printStackTrace();
             }
         }
+    }
+
+    public Person search (long id){
+        Person person = null;
+        try {
+            Class.forName("org.h2.Driver");
+            connect = DriverManager.getConnection("jdbc:h2:~/test", "admin", "");
+            statement = connect.createStatement();
+            ResultSet r = statement.executeQuery("Select * FROM Person WHERE ID =" + id);
+            r.next();
+            person = new Person(id,r.getInt("index"),r.getString("fname"),r.getString("lname"),r.getLong("age"));
+
+//            person = new Person(id,r.getInt("index"),r.getString("fname"),r.getString("lname"),r.getLong("age"));
+            //Person(Long id, int index, String fname, String lname, Long age)
+
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (connect != null || statement != null) {
+                    statement.close();
+                    connect.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return person;
     }
 }
 

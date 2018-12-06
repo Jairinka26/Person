@@ -8,7 +8,7 @@ import view.factory.*;
 
 
 public class Controler  implements IControler, DialogCreate.DialogCreateCallBack,
-        DialogUpdate.DialogUpdateCallBack, DialogDelete.DialogDeleteCallBack{
+        DialogUpdate.DialogUpdateCallBack, DialogDelete.DialogDeleteCallBack, DialogSearch.DialogSearchCallBack{
     //То что обновляет таблицу
     private TableContract tabelConfig;
     // Интерфейс фабрики
@@ -50,6 +50,13 @@ public class Controler  implements IControler, DialogCreate.DialogCreateCallBack
     }
 
     @Override
+    public void search() {
+        iDialogFactory = FactoryDialog.getInstance().factoryMethod(this,"search");
+        iDialogFactory.setModal(true);
+        iDialogFactory.setVisible(true);
+    }
+
+    @Override
     public void callBackCreate(Person person) {
         // обновляем таблицу на создание
         H2Bd.getInstance().create(person);
@@ -74,5 +81,12 @@ public class Controler  implements IControler, DialogCreate.DialogCreateCallBack
     public void callBackDelete(long id) {
 //        Mock.getInstance().delete(id);
         H2Bd.getInstance().delete(id);
+    }
+
+    @Override
+    public void callBackSearch(long id) {
+
+        tabelConfig.setSearch(H2Bd.getInstance().search(id));
+
     }
 }

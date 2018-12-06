@@ -65,6 +65,15 @@ public class Table extends AbstractTableModel implements TableContract {
         //метод обновления в таблице
     }
 
+    public void setSearch(Person person){
+        //Заменить массив
+        listPerson.clear();
+        listPerson.add(person);
+        //метод обновления в таблице
+        fireTableDataChanged();
+        //метод обновления в таблице
+    }
+
     public void setUpdateValue(Person pers){
         for (int i = 0; i < listPerson.size() ; i++) {
             if (listPerson.get(i).getId() == pers.getId())
