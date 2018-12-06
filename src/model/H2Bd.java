@@ -7,7 +7,7 @@ public class H2Bd {
     private static H2Bd instance = null;
     private Connection connect;
     private Statement statement;
-    private Long iD = 0L;
+    private Long iD = 1L;
     private int index = 0;
     private List<Person> list;
 

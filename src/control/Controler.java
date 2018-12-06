@@ -17,6 +17,7 @@ public class Controler  implements IControler, DialogCreate.DialogCreateCallBack
     public Controler(TableContract tabelConfig) {
         // Получаем то что обновляет таблицу из панели
         this.tabelConfig = tabelConfig;
+        tabelConfig.setAllValue(H2Bd.getInstance().read());//temp try to load data on start
     }
 
     @Override
