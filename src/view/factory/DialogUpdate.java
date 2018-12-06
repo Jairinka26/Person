@@ -70,7 +70,7 @@ public class DialogUpdate<T extends DialogUpdate.DialogUpdateCallBack> extends J
         search.addActionListener(e -> {
             Person person = callBack.eventUpdate(Long.parseLong(d_Id.getText()));
             index = person.getIndex();
-            d_Id.setText(String.valueOf(person.getId()));
+        //    d_Id.setText(String.valueOf(person.getId()));
             d_FName.setText(person.getFname());
             d_LName.setText(person.getLname());
             d_Age.setText(String.valueOf(person.getAge()));
@@ -79,10 +79,11 @@ public class DialogUpdate<T extends DialogUpdate.DialogUpdateCallBack> extends J
 
         ok.addActionListener(e -> {
             callBack.callBackUpdate(new Person(
+                    Long.parseLong(d_Id.getText()),
                     index,
                     d_FName.getText(),
                     d_LName.getText(),
-                    Integer.parseInt(d_Age.getText())));
+                    Long.parseLong(d_Age.getText())));
             setVisible(false);
         });
 

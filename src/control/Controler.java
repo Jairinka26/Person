@@ -1,6 +1,7 @@
 package control;
 
 import model.Mock;
+import model.H2Bd;
 import model.Person;
 import model.TableContract;
 import view.factory.*;
@@ -30,7 +31,7 @@ public class Controler  implements IControler, DialogCreate.DialogCreateCallBack
 
     @Override
     public void read() {
-        tabelConfig.setAllValue(Mock.getInstance().read());
+        tabelConfig.setAllValue(H2Bd.getInstance().read());
     }
 
     @Override
@@ -50,23 +51,27 @@ public class Controler  implements IControler, DialogCreate.DialogCreateCallBack
     @Override
     public void callBackCreate(Person person) {
         // обновляем таблицу на создание
-        Mock.getInstance().create(person);
+        H2Bd.getInstance().create(person);
+       // Mock.getInstance().create(person);
         tabelConfig.setValue(person);
     }
 
     @Override
     public void callBackUpdate(Person person) {
         // обновляем таблицу на изменение
-        tabelConfig.setUpdateValue(Mock.getInstance().updateUI(person));
+       // tabelConfig.setUpdateValue(Mock.getInstance().updateUI(person));
+        tabelConfig.setUpdateValue(H2Bd.getInstance().updateUI(person));
     }
 
     @Override
     public Person eventUpdate(long id) {
-        return Mock.getInstance().update(id);
+        return H2Bd.getInstance().update(id);
+//        return Mock.getInstance().update(id);
     }
 
     @Override
     public void callBackDelete(long id) {
-        Mock.getInstance().delete(id);
+//        Mock.getInstance().delete(id);
+        H2Bd.getInstance().delete(id);
     }
 }

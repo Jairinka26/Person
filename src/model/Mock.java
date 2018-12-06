@@ -12,7 +12,38 @@ public final class Mock {
     private List<Person> list;
 
     private Mock() {
-        list = new ArrayList<>(1);
+//        list = new ArrayList<>();
+//        list.add(new Person(1L,0,"ola","kol",23L));
+//        index++;
+//        iD++;
+//        list.add(new Person(2L,1,"ola1","kol1",23L));
+//        index++;
+//        iD++;
+//        list.add(new Person(3L,2,"ola2","kol2",23L));
+//        index++;
+//        iD++;
+//        list.add(new Person(4L,3,"ola3","kol3",23L));
+//        index++;
+//        iD++;
+//        list.add(new Person(5L,4,"ola4","kol4",23L));
+//        index++;
+//        iD++;
+//        list.add(new Person(6L,5,"ola5","kol5",23L));
+//        index++;
+//        iD++;
+//        list.add(new Person(7L,6,"ola6","kol6",23L));
+//        index++;
+//        iD++;
+//        list.add(new Person(8L,7,"ola7","kol7",23L));
+//        index++;
+//        iD++;
+//        list.add(new Person(9L,8,"ola8","kol8",23L));
+//        index++;
+//        iD++;
+//        list.add(new Person(10L,9,"ola9","kol9",23L));
+//        index++;
+//        iD++;
+
     }
 
     public static synchronized Mock getInstance() {
@@ -64,8 +95,6 @@ public final class Mock {
                 isHasId=true;
             }
         }
-
      //   if (isHasId=false)
-
     }
 }

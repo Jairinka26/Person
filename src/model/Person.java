@@ -11,6 +11,14 @@ public class Person {
     public Person() {
     }
 
+    public Person(Long id, int index, String fname, String lname, Long age) {
+        this.id = id;
+        this.index = index;
+        this.fname = fname;
+        this.lname = lname;
+        this.age = age;
+    }
+
     public Person(int index, String fname, String lname, long age) {
         this.index = index;
         this.fname = fname;
