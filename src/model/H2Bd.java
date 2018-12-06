@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class H2Bd {
@@ -52,7 +53,7 @@ public class H2Bd {
     }
 
     public List<Person> read() {
-        List<Person> list=null;
+        List<Person> list= new ArrayList<>() ;
         try {
             Class.forName("org.h2.Driver");
             connect = DriverManager.getConnection("jdbc:h2:~/test", "admin", "");
@@ -61,7 +62,11 @@ public class H2Bd {
             ResultSet r = statement.executeQuery("SELECT * FROM PERSON ");
 
             while (r.next()){
-                list.add(new Person(r.getLong("ID"),r.getInt("index"),r.getString("fname"),r.getString("lname"),r.getLong("age")));
+                list.add(new Person(r.getLong("ID"),
+                        r.getInt("index"),
+                        r.getString("fname"),
+                        r.getString("lname"),
+                        r.getLong("age")));
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
