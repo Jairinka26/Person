@@ -1,5 +1,9 @@
 package model;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,21 +26,24 @@ public class H2Bd {
     }
 //CREATE TABLE PERSON (ID INT PRIMARY KEY, index INT, fname VARCHAR(255),  lname VARCHAR(255), age INT);
     public void create(Person person) {
-
         try {
             Class.forName("org.h2.Driver");
             connect = DriverManager.getConnection("jdbc:h2:~/test", "admin", "");
             statement = connect.createStatement();
 //           TO_DO: use select top
-            ResultSet r = statement.executeQuery("SELECT * FROM PERSON ");
+            ResultSet r = statement.executeQuery("SELECT MAX(ID) FROM PERSON ");
+            r.next();
+            if (r.getString(1) != null)
+                iD=r.getLong(1);
+                    else iD=0L;
 
-            while (r.next()){
-                iD = r.getLong("ID");
-            }
+//            while (r.next()){
+//                iD = r.getLong("ID");
+//            }
             person.setId(++iD);
             person.setIndex(++index);
-            statement.executeUpdate("insert into Person values(" + person.getId() + "," + person.getIndex()+
-                    ",'" + person.getFname() + "','" + person.getFname() + "'," + person.getAge() + ")");
+            statement.executeUpdate("insert into Person values(" + iD + "," + person.getIndex()+
+                    ",'" + person.getFname() + "','" + person.getLname() + "'," + person.getAge() + ")");
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
@@ -162,11 +169,6 @@ public class H2Bd {
             ResultSet r = statement.executeQuery("Select * FROM Person WHERE ID =" + id);
             r.next();
             person = new Person(id,r.getInt("index"),r.getString("fname"),r.getString("lname"),r.getLong("age"));
-
-//            person = new Person(id,r.getInt("index"),r.getString("fname"),r.getString("lname"),r.getLong("age"));
-            //Person(Long id, int index, String fname, String lname, Long age)
-
-
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
@@ -180,6 +182,82 @@ public class H2Bd {
             }
         }
         return person;
+    }
+
+    public void export() throws IOException {
+        ArrayList<Person> exportList = (ArrayList) read();
+        Gson gson = new Gson();
+        FileOutputStream fileOutputStream;
+        String path = "Persons.txt";
+        fileOutputStream = new FileOutputStream(path);
+
+        for(int i=0; i<exportList.size();i++)
+
+        {
+//            String text = exportList.get(i).toString();
+//            String text = gson.toJson(exportList.get(i));
+            String text = exportList.get(i).getId()+","+exportList.get(i).getIndex()+","+exportList.get(i).getFname()+","+exportList.get(i).getLname()+","+exportList.get(i).getAge();
+            String text1 = text+"\n";
+            byte[] buffer = text1.getBytes();
+            fileOutputStream.write(buffer, 0, buffer.length);
+        }
+        fileOutputStream.close();
+    }
+    
+    public void _import() throws IOException {
+//        ArrayList<Person> importList = new ArrayList();
+//        String path = "Persons.txt";
+//        Gson gson = new Gson();
+//        JsonObject json= new JsonObject();
+//        FileReader reader = new FileReader(path);
+//        BufferedReader buffer = new BufferedReader(reader);
+//        while (buffer.readLine() != null) {
+//            String p=buffer.readLine();
+//
+//   //         String s = gson.toJson(buffer.readLine());
+//            importList.add(p);
+//        }
+//        reader.close();
+
+        ArrayList<Person> importList = new ArrayList();
+        String path = "Persons.txt";
+        FileReader reader = new FileReader(path);
+        BufferedReader buffer = new BufferedReader(reader);
+        String str;
+        while ((str=buffer.readLine()) != null) {
+            String[] s = str.split("\n");
+            for (int i = 0; i < s.length ; i++) {
+
+                String[] p = s[i].split(",");
+                importList.add(new Person(Long.parseLong(p[0]), Integer.parseInt(p[1]), p[2], p[3], Long.parseLong(p[4])));
+            }
+        }
+        reader.close();
+
+    // Delete all data from db
+        try {
+            Class.forName("org.h2.Driver");
+            connect = DriverManager.getConnection("jdbc:h2:~/test", "admin", "");
+            statement = connect.createStatement();
+            statement.executeUpdate("DELETE FROM Person");
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (connect != null || statement != null) {
+                    statement.close();
+                    connect.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+//        add imported Persons to db
+        for (int i=0; i < importList.size(); i++){
+            create(importList.get(i));
+        }
+
     }
 }
 

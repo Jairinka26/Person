@@ -1,5 +1,7 @@
 package control;
 
+import java.io.IOException;
+
 public interface IControler {
     void create();
 
@@ -10,4 +12,9 @@ public interface IControler {
     void delete();
 
     void search();
+
+    void export() throws IOException;
+
+    void _import() throws IOException;
+
 }

@@ -1,12 +1,18 @@
 package model;
 
-public class Person {
-    private Long id;
-    private int index;
-    private String fname;
-    private String lname;
-    private Long age;
+import com.google.gson.annotations.SerializedName;
 
+public class Person {
+    @SerializedName("id")
+    private Long id;
+    @SerializedName( "index")
+    private int index;
+    @SerializedName("fname")
+    private String fname;
+    @SerializedName("lname")
+    private String lname;
+    @SerializedName("age")
+    private Long age;
 
     public Person() {
     }

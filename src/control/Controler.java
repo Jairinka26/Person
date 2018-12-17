@@ -6,6 +6,10 @@ import model.Person;
 import model.TableContract;
 import view.factory.*;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Controler  implements IControler, DialogCreate.DialogCreateCallBack,
         DialogUpdate.DialogUpdateCallBack, DialogDelete.DialogDeleteCallBack, DialogSearch.DialogSearchCallBack{
@@ -54,6 +58,23 @@ public class Controler  implements IControler, DialogCreate.DialogCreateCallBack
         iDialogFactory = FactoryDialog.getInstance().factoryMethod(this,"search");
         iDialogFactory.setModal(true);
         iDialogFactory.setVisible(true);
+    }
+
+    @Override
+    public void export() throws IOException {
+        H2Bd.getInstance().export();
+//        List<Person> listFromDb = new ArrayList<>();
+//        listFromDb=H2Bd.getInstance().read();
+//        int i = 0;
+//        while (listFromDb.iterator().hasNext() != false){
+//
+//
+//        }
+    }
+
+    @Override
+    public void _import() throws IOException {
+        H2Bd.getInstance()._import();
     }
 
     @Override

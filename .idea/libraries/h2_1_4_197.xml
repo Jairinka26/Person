@@ -2,6 +2,7 @@
   <library name="h2-1.4.197">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/h2-1.4.197.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/gson-2.6.2.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
